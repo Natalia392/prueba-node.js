@@ -33,8 +33,15 @@ router.get('/getAll', async (req, res) => {
 })
 
 // Get by ID method
-router.get('/getOne/:id', (req, res) => {
-  res.send(req.params.id)
+router.get('/getOne/:id', async (req, res) => {
+  // res.send(req.params.id)
+  try {
+    const data = await Model.findById(req.params.id);
+    res.json(data)
+  }
+  catch(error) {
+    res.status(500).json({message: error.message})
+  }
 })
 
 // Update by ID
